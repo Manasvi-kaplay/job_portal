@@ -18,6 +18,10 @@ app.get("/",function(req,res){
   res.send("success fully deploy")
 })
 
+app.get("/test",function(req,res){
+  res.send("test")
+})
+
 
 app.listen(process.env.PORT || 3000,function(){
     console.log("server started at port 3000")
