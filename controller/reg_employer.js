@@ -6,10 +6,10 @@ router.post('/addemployer',function(req,res){
     console.log("req.body ........",req.body)
     account.insert(req.body,function(err,result){
         if(err){
-            res.send(err)
+            res.status(400).json({status:0,err:"err"})
         }
         if(result){
-            res.send(result)
+            res.status(200).json({status:1,err:result.ops})
         }
     }); 
 });
