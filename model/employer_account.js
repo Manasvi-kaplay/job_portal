@@ -17,3 +17,12 @@ module.exports.findWhere=function(obj, cb){
 		db.collection("reg_employer").find(obj).toArray(cb);
 	});
 }
+module.exports.update=function(where,obj,cb){
+	connection.init(function(err,client){
+		var db=client.db('jobportal');
+  db.collection("reg_employer").updateOne(where,{$set:obj},cb,function(err, res) {
+    if (err) throw err;
+    console.log("1 document updated");
+	});
+});
+}
