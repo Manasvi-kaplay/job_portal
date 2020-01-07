@@ -16,10 +16,14 @@ router.post('/addemployer',function(req,res)
 {
     console.log("req.body ........",req.body)
     var email=req.body.email;
+
     employer_account.findWhere({email:email},function(err,result)
     {
         console.log("result.length  :"+result.length)
         if(result.length==0){
+            console.log("req.body....",req.body)
+            req.body.status=0;
+            //var obj={};
     employer_account.insert(req.body,function(err,result)
     {
         if(err){
@@ -49,7 +53,16 @@ router.post('/edit',function(req,res){
         }
     })
 })
-router.post('/deleteemployer',function(req,res){
-
+router.post('/delete',function(req,res){
+    console.log(req.body,"DDDDDDDDDDDDDDDDDDDD")
+    console.log(req.body.id)
+      employer_account.delete(req.body,function(err,result){
+          if(err){
+              res.status(400).json({status:0,err:"Account could not be deleted!"})
+          }
+          if(result){
+              res.status(200).json({status:1,err:"Account deleted"})
+          }
+      })
 })
 module.exports=router;

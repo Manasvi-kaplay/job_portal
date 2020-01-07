@@ -15,5 +15,6 @@ app.use(session({ secret : "TSS", saveUninitialized: true}));
 app.use(fileupload());
 app.use(require("./controller/default"));
 app.listen(process.env.PORT || 3000,function(){
+  console.log(Math.floor(Math.random() * (99999 - 10000) + 10000))
     console.log("server started at port 3000")
 });

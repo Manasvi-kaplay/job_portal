@@ -26,3 +26,9 @@ module.exports.update=function(where,obj,cb){
 	});
 });
 }
+module.exports.delete=function(obj,cb){
+	connection.init(function(err,client){
+		var db=client.db('jobportal');
+		db.collection("reg_employer").remove(obj,cb);
+	})
+}

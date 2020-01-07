@@ -35,6 +35,6 @@ router.post('/login_jobseeker',function(req,res){
 			}
 		        }
   });
-  });
+  });                           
   })
   module.exports=router;
