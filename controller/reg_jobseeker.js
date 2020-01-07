@@ -69,7 +69,16 @@ router.post('/edit/:id',function(req,res){
         })
 });
 
-router.post('/deletejobseeker',function(req,res){
-
+router.post('/delete',function(req,res){
+    console.log(req.body,"DDDDDDDDDDDDDDDDDDDD")
+    console.log(req.body.id)
+      jobseeker_account.delete({_id:Mongodb.ObjectId(req.body.id)},function(err,result){
+          if(err){
+              res.status(400).json({status:0,err:"Account could not be deleted!"})
+          }
+          if(result){
+              res.status(200).json({status:1,err:"Account deleted"})
+          }
+      })
 })
 module.exports=router;

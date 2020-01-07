@@ -56,7 +56,7 @@ router.post('/edit',function(req,res){
 router.post('/delete',function(req,res){
     console.log(req.body,"DDDDDDDDDDDDDDDDDDDD")
     console.log(req.body.id)
-      employer_account.delete(req.body,function(err,result){
+      employer_account.delete({_id:Mongodb.ObjectId(req.body.id)},function(err,result){
           if(err){
               res.status(400).json({status:0,err:"Account could not be deleted!"})
           }
