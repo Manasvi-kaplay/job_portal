@@ -13,7 +13,6 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json({
   limit: '50mb'
 }));
-
 app.use(express.static(__dirname+"/public"));
 // app.use(bodyParser.json());  
 app.use(cookieParser());
