@@ -6,8 +6,11 @@ var path = require('path');
 var jobseeker_account=require("../model/jobseeker_account");
 var Mongodb = require('mongodb');
 router.post('/addjobseeker',function(req,res){
+    console.log("SSSSSSSSSSSanjay")
     console.log("req.body ........",req.body);
-    console.log("req.files........",req.files)
+    if(req.files){
+
+    
     var file = req.files.resume;
     console.log("file.....",file);
 	var newname = changename(file.name);
@@ -18,6 +21,8 @@ router.post('/addjobseeker',function(req,res){
 			return;
 		}
         req.body.resume=newname;
+    });
+}   
         var email=req.body.email;
     jobseeker_account.findWhere({email:email},function(err,result)
     {
@@ -38,7 +43,7 @@ router.post('/addjobseeker',function(req,res){
         res.end("Entered email id already exists!!")  
             }
 });
-    });
+    
 });
 router.post('/edit/:id',function(req,res){
         var id = req.params.id;
@@ -48,7 +53,7 @@ router.post('/edit/:id',function(req,res){
 	delete req.files.resume;
      console.log(req.files);
      console.log("req.files.resume.....",resume)
-	if(req.files.resume)
+	if(req.files)
 	{
 		var file = req.files.resume;
 		var newname = changename(file.name);

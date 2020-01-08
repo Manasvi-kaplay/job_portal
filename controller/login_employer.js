@@ -30,9 +30,12 @@ router.post('/login_employer',function(req,res){
 				req.session.email = data.email;
         req.session.is_user_logged_in=true;
         console.log("Successful login!")
-        res.status(400).json({status:1,err:"welcome"})
+        res.status(200).json({status:1,err:"welcome"})
         //res.redirect('/login_employer');
-			}
+      }
+      else if(data.password==password && data.status==0){
+        res.status(400).json({status:0,err:"Admin has not verified your account yet!!"})
+      }
 			else
 			{
         res.status(400).json({status:0,err:"username or password incorrect!!"})
@@ -98,8 +101,5 @@ router.post('/login_employer',function(req,res){
   router.post('/check_password',function(req,res){
 
   });
-
-  
-    
   module.exports=router;
  

@@ -1,6 +1,8 @@
 var express=require("express");
 var router=express.Router();
 var connection=require("../config/connect")
+var jwt=require("jsonwebtoken");
+//var config=require("../config")
 router.post('/login_admin',function(req,res){
     console.log(req.body)
   connection.init(function(err, client){
@@ -25,7 +27,11 @@ router.post('/login_admin',function(req,res){
               req.session.email = data.email;
       req.session.is_user_logged_in=true;
       console.log("Successful login!")
-      res.status(200).json({status:1,err:"welcome to admin panel"})
+      var token = jwt.sign({ id: user._id }, connection.secret, {
+        expiresIn: 86400 // expires in 24 hours
+      });
+      //res.status(200).send({ auth: true, token: token });
+      res.status(200).json({status:1,err:"welcome to admin panel",token: token})
       //res.redirect('/login_employer');
           }
           else
