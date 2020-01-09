@@ -3,8 +3,8 @@ var router=express.Router();
 var connection=require("../config/connect")
 var employer_account=require("../model/employer_account");
 var nodemailer=require("nodemailer");
-var crypto=require("crypto");
-var async = require("async");
+var config=require("./config")
+var jwt=require("jsonwebtoken");
 router.post('/login_employer',function(req,res){
       console.log(req.body)
     connection.init(function(err, client){
@@ -13,7 +13,6 @@ router.post('/login_employer',function(req,res){
       var password=req.body.password;
       var status=req.body.status;
       db.collection('reg_employer').find({ $or: [ { email:email }, { mobile:email } ] }).toArray(function(err,user){
-        //db.collection('userprofile').findOne({ email:email},{mobileno:mobileno}, function(err, user) {
           console.log("user[0].......",user[0])
             if(err){
               console.log("error")
@@ -30,8 +29,10 @@ router.post('/login_employer',function(req,res){
 				req.session.email = data.email;
         req.session.is_user_logged_in=true;
         console.log("Successful login!")
-        res.status(200).json({status:1,err:"welcome"})
-        //res.redirect('/login_employer');
+        var token = jwt.sign({ id: user._id }, config.secret, {
+          expiresIn: 86400 // expires in 24 hours
+        })
+        res.status(200).json({status:1,err:"welcome",token:token})
       }
       else if(data.password==password && data.status==0){
         res.status(400).json({status:0,err:"Admin has not verified your account yet!!"})
@@ -39,7 +40,6 @@ router.post('/login_employer',function(req,res){
 			else
 			{
         res.status(400).json({status:0,err:"username or password incorrect!!"})
-        //res.redirect('/login_employer');
 			}
 		        }
   });
@@ -59,37 +59,34 @@ router.post('/login_employer',function(req,res){
       else{  
         var random=Math.floor(Math.random() * (99999 - 10000) + 10000);      
         if(user.length>0){
-          employer_account.insert(random)/*,function(err,result){
+          employer_account.update({ email:email },{otp:random},function(err,result){
             if(err){
-             res.status(400).json({status:0,err:"otp not inserted in database!"})
+                res.status(400).json({status:0,err:"err"})
             }
             if(result){
-             res.status(200).json({status:1,err:"otp inserted in database!"})
-             console.log("otp inserted......")
+            //Code for sending otp to mentioned email id for resetting password:
+              var transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                  user: 'manasvi111.kaplay@gmail.com',
+                  pass: '100Scholars'
+                }
+              });
+              var mailOptions = {
+                from: 'manasvi111.kaplay@gmail.com',
+                to: email,
+                subject: 'Your password',
+                html:'<h1>Your otp to reset password is:</h1>'+random
+              };
+              transporter.sendMail(mailOptions, function(error, info){
+                if (error) {
+                  console.log(error);
+                } else {
+                  console.log('Email sent: ' + info.response);
+                }
+              });
+                res.status(200).json({status:1,result:"successful update"})
             }
-          })*/
-        res.status(200).json({status:1,err:"Email id found!"})
-        console.log("password.....",password);
-        //Code for sending otp to mentioned email id for resetting password:
-        var transporter = nodemailer.createTransport({
-          service: 'gmail',
-          auth: {
-            user: 'manasvi111.kaplay@gmail.com',
-            pass: '100Scholars'
-          }
-        });
-        var mailOptions = {
-          from: 'manasvi111.kaplay@gmail.com',
-          to: email,
-          subject: 'Your password',
-          html:'<h1>Your otp to reset password is:</h1>'+random
-        };
-        transporter.sendMail(mailOptions, function(error, info){
-          if (error) {
-            console.log(error);
-          } else {
-            console.log('Email sent: ' + info.response);
-          }
         });
          }
         else{
@@ -98,8 +95,39 @@ router.post('/login_employer',function(req,res){
       }
     });
   });
-  router.post('/check_password',function(req,res){
-
+  router.post('/check_otp',function(req,res){
+    var email=req.body.email;
+    var otp=req.body.otp;
+    employer_account.findWhere({email:email},function(err,result){
+      if(err){
+        console.log(err);
+        res.status(400).json({status:0,err:err})
+      }
+      if(result.length==0){
+        res.status(400).json({status:0,err:"No such email found!!"})
+      }
+      else{
+        var data=result[0];
+        if(data.otp==otp){
+          res.status(200).json({status:1,result:"Correct otp entered"})
+        }
+        else{
+          res.status(400).json({status:0,err:"Otp invalid!"})
+        }
+      }
+    })
+  });
+  router.post('/update_password',function(req,res){
+    var email=req.body.email;
+    var password=req.body.password;
+    employer_account.update({ email:email},{password:password},function(err,result){
+      if(err){
+          res.status(400).json({status:0,err:"err"})
+      }
+      if(result){
+          res.status(200).json({status:1,result:"successful update"})
+      }
+  });
   });
   module.exports=router;
  

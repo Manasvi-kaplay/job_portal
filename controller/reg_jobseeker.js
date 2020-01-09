@@ -9,8 +9,6 @@ router.post('/addjobseeker',function(req,res){
     console.log("SSSSSSSSSSSanjay")
     console.log("req.body ........",req.body);
     if(req.files){
-
-    
     var file = req.files.resume;
     console.log("file.....",file);
 	var newname = changename(file.name);

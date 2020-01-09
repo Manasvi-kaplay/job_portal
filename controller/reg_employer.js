@@ -16,14 +16,12 @@ router.post('/addemployer',function(req,res)
 {
     console.log("req.body ........",req.body)
     var email=req.body.email;
-
     employer_account.findWhere({email:email},function(err,result)
     {
         console.log("result.length  :"+result.length)
         if(result.length==0){
             console.log("req.body....",req.body)
             req.body.status=0;
-            //var obj={};
     employer_account.insert(req.body,function(err,result)
     {
         if(err){
@@ -49,10 +47,10 @@ router.post('/edit',function(req,res){
             res.status(400).json({status:0,err:"err"})
         }
         if(result){
-            res.status(200).json({status:1,err:result.ops})
+            res.status(200).json({status:1,result:"successful update"})
         }
-    })
-})
+    });
+});
 router.post('/delete',function(req,res){
     console.log(req.body,"DDDDDDDDDDDDDDDDDDDD")
     console.log(req.body.id)

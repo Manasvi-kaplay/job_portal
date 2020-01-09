@@ -1,6 +1,9 @@
 var connection = require("../config/connect");
 module.exports.insert=function(obj,cb){
   connection.init(function(err,client){
+	  if(err){
+		  
+	  }
     var db = client.db('jobportal');
 db.collection("reg_employer").insert(obj,cb)
 });

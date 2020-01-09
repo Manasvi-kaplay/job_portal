@@ -1,6 +1,8 @@
 var express=require("express");
 var router=express.Router();
 var connection=require("../config/connect")
+var config=require("./config");
+var jwt=require("jsonwebtoken");
 router.post('/login_jobseeker',function(req,res){
       console.log(req.body)
     connection.init(function(err, client){
@@ -25,7 +27,10 @@ router.post('/login_jobseeker',function(req,res){
 				req.session.email = data.email;
         req.session.is_user_logged_in=true;
         console.log("Successful login!")
-        res.status(400).json({status:1,err:"welcome!"})
+        var token = jwt.sign({ id: user._id }, config.secret, {
+          expiresIn: 86400 // expires in 24 hours
+        });
+        res.status(400).json({status:1,err:"welcome!",token:token})
         //res.redirect('/login_employer');
 			}
 			else
