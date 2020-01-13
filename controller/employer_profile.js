@@ -3,8 +3,8 @@ var router=express.Router();
 var employer_account=require("../model/employer_account");
 var Mongodb=require("mongodb");
 var jobs=require("../model/jobs");
-router.get('/view_profile/:id',function(req,res){
-    var id=req.params.id;
+router.post('/view_profile',function(req,res){
+    var id=req.body.id;
     console.log("req.query....",req.query)
     console.log("req.params....",req.params)
     employer_account.findWhere({ _id : Mongodb.ObjectId(id) }, function(err, result){
