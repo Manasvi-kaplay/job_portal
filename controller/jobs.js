@@ -5,7 +5,9 @@ var employer_account=require("../model/employer_account");
 var Mongodb = require('mongodb');
 router.get('/view',function(req,res){
     jobs.find(function(err,result){
-        var count=jobs.count();
+        var count=jobs.count(function(err,result1){
+       console.log("ssssssssssssssssssssss",result1,"PPPPPPPPPPPPPPPPPPP")
+        
         console.log("No. of documents in collection jobs...",count)
         for(var i=0;i<=count-1;i+=1){
         var data=result[i];
@@ -24,6 +26,7 @@ router.get('/view',function(req,res){
                 res.status(200).json({status:1,result:{data,final}})
             })
         }
+    });
       })
 })
 router.post('/addjob',function(req,res)

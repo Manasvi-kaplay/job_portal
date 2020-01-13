@@ -32,7 +32,7 @@ router.post('/login_jobseeker',function(req,res){
         var token = jwt.sign({ id: user._id }, config.secret, {
           expiresIn: 86400 // expires in 24 hours
         });
-        res.status(200).json({status:1,err:"welcome!",token:token})
+        res.status(200).json({status:1,err:"welcome!",token:token,id:data._id})
         //res.redirect('/login_employer');
 			}
 			else

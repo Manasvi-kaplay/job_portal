@@ -11,11 +11,10 @@ module.exports.find=function(cb){
 		db.collection("jobs").find().toArray(cb);
 	});
 }
-module.exports.count=function(){
+module.exports.count=function(cb){
 	connection.init(function(err,client){
 		var db = client.db('jobportal');
-		var collection=jobs;
-		console.log("heyyyyyyyyyy",db.collection.count())
+		return db.collection("jobs").find({}).count(cb);
 	})
 }
 module.exports.findWhere=function(obj, cb){
