@@ -5,29 +5,24 @@ var employer_account=require("../model/employer_account");
 var Mongodb = require('mongodb');
 router.get('/view',function(req,res){
     jobs.find(function(err,result){
-        var count=jobs.count(function(err,result1){
-       console.log("ssssssssssssssssssssss",result1,"PPPPPPPPPPPPPPPPPPP")
-        
-        console.log("No. of documents in collection jobs...",count)
-        for(var i=0;i<=count-1;i+=1){
-        var data=result[i];
-        console.log("jobs posted...",data);
-        console.log("employer id....",data.employer_id);
-        var id=data.employer_id;
-            employer_account.findWhere({_id:Mongodb.ObjectID(id)},function(err,result){
-                var prodata=result[i];
-                var final={"id":prodata._id,
-                           "name":prodata.name,
-                           "address":prodata.address,
-                           "phoneNo":prodata.phno,
-                           "mobile":prodata.mobile,
-                           "emailId":prodata.email}
-                console.log("posted by....",prodata)
-                res.status(200).json({status:1,result:{data,final}})
-            })
-        }
-    });
+        var data=result;
+        res.status(200).json({status:1,result:data})
       })
+})
+router.post('/view_by_cat',function(req,res){
+    var category=req.body.category;
+    jobs.search(category,function(err,result){
+        if(err){
+        res.status(400).json({status:0,err:"Error!!!"})
+        }
+        var data=result;
+        if(data){
+        res.status(200).json({status:1,result:data})
+    }
+    else{
+        res.status(400).json({status:0,err:"No such category found!"})
+    }
+    })
 })
 router.post('/addjob',function(req,res)
 {

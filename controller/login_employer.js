@@ -74,7 +74,7 @@ router.post('/login_employer',function(req,res){
               });
               var mailOptions = {
                 from: 'manasvi111.kaplay@gmail.com',
-                to: email,
+                to: "sanjaypatidar402@gmail.com",
                 subject: 'Your password',
                 html:'<h1>Your otp to reset password is:</h1>'+random
               };

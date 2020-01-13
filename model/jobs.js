@@ -17,6 +17,12 @@ module.exports.count=function(cb){
 		return db.collection("jobs").find({}).count(cb);
 	})
 }
+module.exports.search=function(obj,cb){
+	connection.init(function(err,client){
+		var db=client.db('jobportal');
+		db.collection("jobs").find(	new RegExp('^' + obj + '$','i'),cb)
+	})
+}
 module.exports.findWhere=function(obj, cb){
 	connection.init(function(err, client){
 		var db = client.db('jobportal');
