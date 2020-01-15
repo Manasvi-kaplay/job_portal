@@ -3,6 +3,7 @@ var router=express.Router();
 var jobs=require("../model/jobs");
 var employer_account=require("../model/employer_account");
 var Mongodb = require('mongodb');
+var connection=require("../config/connect")
 router.get('/view',function(req,res){
     jobs.find(function(err,result){
         var data=result;
@@ -10,19 +11,17 @@ router.get('/view',function(req,res){
       })
 })
 router.post('/view_by_cat',function(req,res){
-    var category=req.body.category;
-    jobs.search(category,function(err,result){
-        if(err){
-        res.status(400).json({status:0,err:"Error!!!"})
+    connection.init(function(err,client){
+        var category=req.body.category;
+		console.log(client);
+		var db=client.db('jobportal');
+		db.collection("jobs").find({category:{
+			$regex:new RegExp(category)
+		},function(err,data){
+            res.status(200).json({status:1,data:data})
         }
-        var data=result;
-        if(data){
-        res.status(200).json({status:1,result:data})
-    }
-    else{
-        res.status(400).json({status:0,err:"No such category found!"})
-    }
-    })
+	})
+	})
 })
 router.post('/addjob',function(req,res)
 {
@@ -60,5 +59,5 @@ router.post('/delete',function(req,res){
               res.status(200).json({status:1,err:"Job deleted"})
           }
       })
-})  
+})          
 module.exports=router;

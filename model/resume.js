@@ -27,5 +27,5 @@ module.exports.delete=function(obj,cb){
 	connection.init(function(err,client){
 		var db=client.db('jobportal');
 		db.collection("resume").deleteOne(obj,cb)
-	})
+	});
 }
