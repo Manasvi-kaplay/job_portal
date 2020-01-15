@@ -80,9 +80,9 @@ router.post('/login_employer',function(req,res){
               };
               transporter.sendMail(mailOptions, function(error, info){
                 if (error) {
-                  console.log(error);
+                  console.log("eeeeeeeeeeeeeeeeeeeeee+++++++++++++++++++",error,"---------eeeeeeeee");
                 } else {
-                  console.log('Email sent: ' + info.response);
+                  console.log('SSSSSSSSSSSSSSSSSSSSSSSS +++++++++++++Email sent: ' + info.response,"SSSSSSSSSSSSS");
                 }
               });
                 res.status(200).json({status:1,result:"successful update"})
