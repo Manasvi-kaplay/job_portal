@@ -10,6 +10,20 @@ router.get('/view',function(req,res){
         res.status(200).json({status:1,result:data})
       })
 })
+router.post('/view_job_details',function(req,res){
+    var id=req.body.id;
+    jobs.findWhere({_id:Mongodb.ObjectID(id)},function(err,result){
+        if(err){
+            console.log("Error!")
+            res.status(400).json({status:0,err:"Error!"})
+        }
+        if(result){
+            var data=result;
+            console.log("success...",data)
+            res.status(200).json({status:1,result:data})
+        }
+    })
+})
 router.post('/view_by_cat',function(req,res){
     connection.init(function(err,client){
         var category=req.body.category;
