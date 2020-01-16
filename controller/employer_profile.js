@@ -10,8 +10,8 @@ router.post('/view_profile',function(req,res){
     employer_account.findWhere({ _id : Mongodb.ObjectId(id) }, function(err, result){
       var prodata=result[0];
            console.log("profile...",prodata);
-      jobs.findWhere({employer_id:id},function(err,result){
-            var data=result[0];
+      jobs.findWhere({employer_id:id},function(err,result1){
+            var data=result1;
             console.log("jobs posted...",data);
             if(data){
               res.status(200).json({status:1,result:{prodata,data}})
