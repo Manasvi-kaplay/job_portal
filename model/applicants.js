@@ -11,3 +11,9 @@ module.exports.findWhere=function(obj, cb){
 		db.collection("applicants").find(obj).toArray(cb);
 });
 }
+module.exports.count=function(cb){
+	connection.init(function(err,client){
+		var db = client.db('jobportal');
+		return db.collection("jobs").find({}).count(cb);
+	})
+}

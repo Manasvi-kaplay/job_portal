@@ -18,7 +18,7 @@ router.post('/view_job_details',function(req,res){
             res.status(400).json({status:0,err:"Error!"})
         }
         if(result){
-            var data=result;
+            var data=result[0];
             console.log("success...",data)
             res.status(200).json({status:1,result:data})
         }
