@@ -10,7 +10,6 @@ router.use("/reg_jobseeker",require("./reg_jobseeker"))
 router.use("/employer_profile",require("./employer_profile"))
 router.use("/jobseeker_profile",require("./jobseeker_profile"))
 router.use("/jobs",require("./jobs"))
-router.use("/resume",require("./resume"))
 function backdoor(req, res, next)
 {
 	if(! req.session.is_user_logged_in)
