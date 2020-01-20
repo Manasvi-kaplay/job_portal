@@ -43,19 +43,15 @@ router.post('/view_applications',function(req,res){
           var i=0;
           var j=0;
           while(i<result.length){
-            console.log("job id.....",result[i].job_id)          
+            console.log("job id...............",result[i].job_id)          
               while(j<result[i].job_id.length){
-              //result[i].job_id.toString();
-          console.log("i.....first.....",i)
-          jobs.findWhere({_id:Mongodb.ObjectID(result[i].job_id)},function(err,result1){
-            console.log(result1);
-            console.log("opopopopopopop",result.length)
-            console.log("i.........",i)
-            if(i==result.length){
-                console.log("heyy.........")
+          jobs.findWhere({_id:Mongodb.ObjectID(result[i].job_id[j])},function(err,result1){
+            if(j==result1.length-1){
+                console.log("List of jobs.......",result1)
             res.status(200).json({status:1,result:result1})
             }
           })
+          console.log("job id....",result[i].job_id[j])
           j+=1
         }
           i+=1

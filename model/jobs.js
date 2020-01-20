@@ -17,17 +17,12 @@ module.exports.count=function(cb){
 		return db.collection("jobs").find({}).count(cb);
 	})
 }
-module.exports.search=function(req,obj,cb){
+/*module.exports.search=function(obj,cb){
 	connection.init(function(err,client){
-		console.log(client);
 		var db=client.db('jobportal');
-		var cat=jobs.category;
-		db.collection("jobs").find({category:{
-			$regex:new RegExp(q)
-		}
+		db.collection('jobs').find( { obj: { $regex: obj, $options: 'i' } } ).toArray(cb)
 	})
-	})
-}
+}*/
 module.exports.findWhere=function(obj, cb){
 	connection.init(function(err, client){
 		var db = client.db('jobportal');
