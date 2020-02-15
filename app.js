@@ -5,6 +5,8 @@ var session=require("express-session");
 var cookieParser=require("cookie-parser");
 var fileupload=require("express-fileupload");
 var fs=require("fs");
+var ejs=require("ejs");
+app.set('view engine','ejs');
 app.use(bodyParser.urlencoded({
   extended:false,
   limit:'50mb'

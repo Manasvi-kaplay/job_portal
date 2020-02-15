@@ -1,0 +1,20 @@
+<h1><i>List of locations.....</i></h1>
+    <div style="float:right">
+    <form action="/admin_panel/searchByLocation" method="POST">
+        <input type="text" name="location" placeholder="Search by location..">
+    </form>
+    </div>
+    <center>
+<table>
+            <tr>
+            <th>Locations</th>
+            </tr>
+            <% data.forEach(function(x){ %>
+                <div>
+                <tr>
+                    <td><%=x.location %></td>
+                </tr>
+                </div>
+        <% }) %>
+        </table>        
+</center>

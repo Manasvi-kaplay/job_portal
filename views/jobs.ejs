@@ -1,0 +1,46 @@
+<h1><i>List of Jobs.....</i></h1>
+    <div style="float:right">
+    <form action="/admin_panel/searchByJobTitle" method="POST">
+        <input type="text" name="Job_title" placeholder="Search by job title..">
+    </form>
+    </div>
+    <center>
+<table>
+            <tr>
+            <th>Job Title</th>
+            <th>Category</th>
+            <th>Company</th>
+            <th>Job Type</th>
+                <th>Email Id</th>
+                <th>Working hours</th>
+                <th>Working days</th>
+                <th>Salary</th>
+                <th>Experience Required</th>
+                <th>Job description</th>
+                <th>Skills Required</th>
+                <th>Location</th>
+                <th>Status</th>
+                <th>Last date</th>
+            </tr>
+            <% data.forEach(function(x){ %>
+                <div>
+                <tr>
+                    <td><%=x.Job_title %></td>
+                    <td><%=x.Category %></td>
+                    <td><%=x.Company %></td>
+                    <td><%=x.job_type%></td>
+                    <td><%=x.email%></td>
+                    <td><%=x.Working_hours%></td>
+                    <td><%=x.Working_days%></td>
+                    <td><%=x.Salary%></td>
+                    <td><%=x.Experience_required%></td>
+                    <td><%=x.Job_description%></td>
+                    <td><%=x.Skills_required%></td>
+                    <td><%=x.Location%></td>
+                    <td><%=x.Status%></td>
+                    <td><%=x.Last_date_to_apply%></td>
+                </tr>
+                </div>
+        <% }) %>
+        </table>        
+</center>

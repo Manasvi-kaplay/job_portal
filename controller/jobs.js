@@ -1,13 +1,28 @@
 var express=require("express");
 var router=express.Router();
 var jobs=require("../model/jobs");
+var connection=require("../config/connect")
 var employer_account=require("../model/employer_account");
 var Mongodb = require('mongodb');
+var category=require("../model/category");
+var location=require("../model/location");
 router.get('/view',function(req,res){
     jobs.find(function(err,result){
         var data=result;
         res.status(200).json({status:1,result:data})
       })
+})
+router.get('/view_categories',function(req,res){
+    jobs.find({}).project({_id:0,category:1},function(err,result){
+        var data=result;
+        res.status(200).json({status:1,result:data})
+    })
+})
+router.get('/view_locations',function(req,res){
+    location.find(function(err,result){
+        var data=result;
+        res.status(200).json({status:1,result:data})
+    })
 })
 router.post('/view_job_details',function(req,res){
     var id=req.body.id;
@@ -127,12 +142,20 @@ router.post('/addjob',function(req,res)
     console.log("req.body ........",req.body)
     jobs.insert(req.body,function(err,result)
     {
+        console.log("Category......",req.body.Category);
+        category.insert({category: req.body.Category},function(error,result1){
+            location.insert({location:req.body.Location},function(err,result2){
         if(err){
-            res.status(400).json({status:0,err:"err"})
+            res.status(400).json({status:0,err:"error in inserting job in jobs collection"})
         }
-        if(result){
-            res.status(200).json({status:1,err:result.ops})
+        /*if(error){
+            res.status(400).json({status:0,error:"error in inserting category in categories collection"})
+        }*/
+        if(result2){
+            res.status(200).json({status:1,result:result.ops})
         }
+    })
+    })
     });
 });
 router.post('/edit',function(req,res){

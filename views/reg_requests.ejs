@@ -1,0 +1,35 @@
+<h1><i>List of Requests.....</i></h1>
+<div style="float:right">
+    <form action="/admin_panel/searchByCompany" method="POST">
+        <input type="text" name="company" placeholder="Search by company..">
+    </form>
+    </div>
+<center>
+<table>
+            <tr>
+            <th>Name</th>
+            <th>Company</th>
+            <th>Address</th>
+            <th>Phone no.</th>
+                <th>Mobile no.</th>
+                <th>Registration</th>
+                <th>Email</th>
+                <th>Status</th>
+            </tr>
+            <% data.forEach(function(x){ %>
+                <div>
+                <tr>
+                    <td><%=x.name %></td>
+                    <td><%=x.company %></td>
+                    <td><%=x.address %></td>
+                    <td><%=x.phno%></td>
+                    <td><%=x.mobile%></td>
+                    <td><%=x.registration_no%></td>
+                    <td><%=x.email%></td>
+                    <td><%=x.status%></td>
+                    <td><form action="/admin_panel/updateStatus/<%= x._id%>" method="get"><button>Accept</button></form></td>
+                </tr>
+                </div>
+        <% }) %>
+        </table>        
+</center>

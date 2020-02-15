@@ -1,0 +1,29 @@
+<table>
+    <tr>
+    <th>Name</th>
+    <th>Gender</th>
+    <th>Email</th>
+    <th>Address</th>
+        <th>Mobile no.</th>
+        <th>Current industry</th>
+        <th>Qualification</th>
+        <th>Annual salary</th>
+        <th>Resume</th>
+    </tr>
+    <% data.forEach(function(x){ %>
+        <div>
+        <tr>
+            <td><%=x.name %></td>
+            <td><%=x.gender %></td>
+            <td><%=x.email %></td>
+            <td><%=x.address %></td>
+            <td><%=x.mobile %></td>
+            <td><%=x.current_industry %></td>
+            <td><%=x.qualification %></td>
+            <td><%=x.annual_salary %></td>
+            <td><img src = "/jobseeker_resume/<%= x.resume %>" height="100" width="100"></td>
+        </tr>
+        </div>
+<% }) %>
+</table>        
+</center>
